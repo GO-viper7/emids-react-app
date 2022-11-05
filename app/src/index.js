@@ -3,11 +3,24 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter } from 'react-router-dom';
+import { MantineProvider } from '@mantine/core';
+import { NotificationsProvider } from '@mantine/notifications';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <MantineProvider
+      withGlobalStyles
+      withNormalizeCSS
+      theme={{ colorScheme: "dark", primaryColor: 'teal', primaryShade: 9 }}
+    >
+      <NotificationsProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+      </NotificationsProvider>
+    </MantineProvider>
   </React.StrictMode>
 );
 
