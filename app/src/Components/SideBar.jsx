@@ -66,6 +66,7 @@ export function NavbarMinimal() {
   const location = useLocation();
   const mockdata = [
     { icon: IconHome2, label: 'Home', to: '/' },
+    
   ];
   const [active, setActive] = useState(0);
   const links = mockdata.map((link, index) => ( 
@@ -88,7 +89,7 @@ export function NavbarMinimal() {
       </Navbar.Section>
       <Navbar.Section>
         <Stack justify="center" spacing={0}>
-          <NavbarLink icon={IconUser} label="Profile" />
+          <Link to="/profile"><NavbarLink icon={IconUser} label="Profile" /></Link>
           <NavbarLink icon={IconLogout} label="Logout" />
         </Stack>
       </Navbar.Section>

@@ -7,7 +7,7 @@ import { createContext } from "react";
 import { useState } from "react";
 import { MantineProvider, ColorSchemeProvider } from '@mantine/core';
 import Emids from './Pages/Emids';
-
+import Profile from "./Pages/Profile";
 const FoodContext = createContext();
 
 function App() {
@@ -22,6 +22,7 @@ function App() {
           <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/profile" element={<Profile />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<SignUp/>} />
                 <Route path="/emids" element={<Emids/>} />

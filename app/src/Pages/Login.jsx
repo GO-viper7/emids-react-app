@@ -1,7 +1,16 @@
+import { Container } from "@mantine/core";
+
 const login = () => {
      return (
           <div>
-                <h1>Login</h1>
+            <Container>
+              <h1>Login</h1>
+              <form>
+            
+              </form>
+            </Container>
+                
+
           </div>
      )
 }

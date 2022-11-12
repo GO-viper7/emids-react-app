@@ -11,3 +11,109 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+ 
+body::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+body::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.test::-webkit-scrollbar {
+  width: 5px;
+}
+ 
+.test::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+ 
+.test::-webkit-scrollbar-thumb {
+  background-color: darkgrey;
+  outline: 1px solid slategrey;
+}
+
+.player-icon {
+  color: #373737;
+  margin-right: 5px;
+}
+.player-icon:hover {
+  color: #000;
+}
+.audio-name {
+  font-size: 10px;
+  font-weight: regular;
+}
+.myclass{
+  transform: scale(0.6);
+}
+.header-player {
+  width: 100%;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: 60px auto;
+}
+.header-player .audio-record {
+  display: flex;
+  align-items: center;
+}
+.header-player .audio-record i {
+  color: #6200ee;
+  font-size: 50px;
+  cursor: pointer;
+  padding: 1px;
+}
+.header-player .audio-record input[type=checkbox] {
+  position: absolute;
+  visibility: hidden;
+}
+.header-player .audio-record input[type=checkbox]:checked ~ label i {
+  color: #fff;
+  background: #6200ee;
+  border-radius: 100%;
+  animation: shadow-expansion 0.9s ease-in-out infinite alternate;
+}
+.header-player .audio-properties .audio_record-control {
+  width: 100%;
+  display: flex;
+  flex-flow: row nowrap;
+}
+.header-player .audio-properties .audio_record-control .audio-overwrite {
+  flex-grow: 2;
+  font-size: 11px;
+  font-weight: regular;
+  padding-top: 6px;
+  text-align: right;
+}
+.header-player .audio-properties .audio_record-control .audio-overwrite > label {
+  padding-right: 10px;
+}
+.header-player .switch {
+  position: relative;
+  display: inline-block;
+  width: 36px;
+  height: 14px;
+  float: right;
+}
+.header-player .switch label {
+  font-size: 12px;
+  font-weight: regular;
+  float: left;
+}
+.header-player .switch input {
+  display: none;
+}
+@keyframes shadow-expansion {
+  from {
+      box-shadow: 0 0 0 15px #6200ee;
+ }
+  to {
+      box-shadow: 0 0 0 7px #6200ee;
+ }
+}

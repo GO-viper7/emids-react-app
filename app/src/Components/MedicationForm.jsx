@@ -21,6 +21,49 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const MedicationForm = () => {
+  const [suggestions, setSuggestions] = useState([
+    {
+      medicationName: "Paracetamol",
+      dosage: "500mg",
+      frequency: "3 times a day",
+      route: "Oral",
+      instructions: "Take with food",
+      RxNORM: "RxNorm: 123456",
+    },
+    {
+      medicationName: "cetirizine",
+      dosage: "10mg",
+      frequency: "2 times a day",
+      route: "Oral",
+      instructions: "Take with food",
+      RxNORM: "RxNorm: 123456",
+    },
+    {
+      medicationName: "Ibuprofen",
+      dosage: "400mg",
+      frequency: "3 times a day",
+      route: "Oral",
+      instructions: "Take with food",
+      RxNORM: "RxNorm: 123456",
+    },
+    {
+      medicationName: "Doxycycline",
+      dosage: "100mg",
+      frequency: "2 times a day",
+      route: "Oral",
+      instructions: "Take with food",
+      RxNORM: "RxNorm: 123456",
+    },
+    {
+      medicationName: "Amoxicillin",
+      dosage: "500mg",
+      frequency: "3 times a day",
+      route: "Oral",
+      instructions: "Take with food",
+      RxNORM: "RxNorm: 123456",
+    },
+  ]);
+  const mainSuggestions = suggestions;
   const [inputFields, setInputFields] = useState([
     {
       id: uuidv4(),
@@ -63,21 +106,21 @@ const MedicationForm = () => {
     ]);
   };
 
-  const firstForm = () => {
+  const firstForm = (obj) => {
     const newInputFields = inputFields.map((i, index) => {
-      if (index == 0) {
-        i["medicationName"] = "FU";
-        i["RxNORM"] = "FU";
-        i["dosage"] = "FU";
-        i["frequency"] = "FU";
-        i["route"] = "FU";
-        i["instructions"] = "FU";
+      if (index === 0) {
+        i["medicationName"] = suggestions[obj].medicationName;
+        i["RxNORM"] = suggestions[obj].RxNORM;
+        i["dosage"] = suggestions[obj].dosage;
+        i["frequency"] = suggestions[obj].frequency;
+        i["route"] = suggestions[obj].route;
+        i["instructions"] = suggestions[obj].instructions;
       }
       return i;
     });
     setInputFields(newInputFields);
-  }
-
+    setSuggestions((prev) => prev.filter((_, i) => i !== obj));
+  };
 
   const handleRemoveFields = (id) => {
     const values = [...inputFields];
@@ -89,122 +132,128 @@ const MedicationForm = () => {
   };
 
   const pushData = (obj) => {
+    console.log(obj);
     setInputFields([
       ...inputFields,
       {
         id: uuidv4(),
-        medicationName: obj.medicationName,
-        RxNORM: obj.RxNORM,
-        dosage: obj.dosage,
-        frequency: obj.frequency,
-        route: obj.route,
-        instructions: obj.instructions,
+        medicationName: suggestions[obj].medicationName,
+        RxNORM: suggestions[obj].RxNORM,
+        dosage: suggestions[obj].dosage,
+        frequency: suggestions[obj].frequency,
+        route: suggestions[obj].route,
+        instructions: suggestions[obj].instructions,
       },
     ]);
+    setSuggestions((prev) => prev.filter((_, i) => i !== obj));
   };
-
+  // setInterval(() => {
+  //    setSuggestions(mainSuggestions)
+  // }, 1000);
+  console.log(inputFields, suggestions);
   return (
     <div style={{ display: "flex" }}>
       <Card>
         <form onSubmit={handleSubmit}>
-         <div style={{ overflowY: "scroll", height: "500px" }}>
-          {inputFields.map((inputField, index) => (
-            <div>
-              <Card shadow="sm" withBorder key={inputField.id}>
-                <Group>
-                <h2>Medicine {index + 1}</h2>
-                {
-                  index === 0 ? null : 
-                    <Button color="red" variant="outline" onClick={() => handleRemoveFields(inputField.id)}>
-                      Remove Medication
-                    </Button>
-                  
-                }
-                
-                </Group>
-                
-                
-                <Group>
-                  <TextInput
-                    name="medicationName"
-                    placeholder="Medication Name"
-                    label="Medication Name"
-                    withAsterisk
-                    value={inputField.medicationName}
-                    onChange={(event) =>
-                      handleChangeInput(inputField.id, event)
-                    }
-                  />
-                  <TextInput
-                    name="RxNORM"
-                    placeholder="RXNormCode"
-                    label="RXNormCode"
-                    withAsterisk
-                    value={inputField.RxNORM}
-                    onChange={(event) =>
-                      handleChangeInput(inputField.id, event)
-                    }
-                  />
-                </Group>
-                <Group>
-                  <TextInput
-                    name="dosage"
-                    placeholder="Dosage"
-                    label="Dosage"
-                    withAsterisk
-                    value={inputField.dosage}
-                    onChange={(event) =>
-                      handleChangeInput(inputField.id, event)
-                    }
-                  />
-                  <TextInput
-                    placeholder="Route"
-                    label="Route"
-                    withAsterisk
-                    name="route"
-                    value={inputField.route}
-                    onChange={(event) =>
-                      handleChangeInput(inputField.id, event)
-                    }
-                  />
-                </Group>
+          <div
+            className="test"
+            style={{ overflowY: "scroll", height: "500px", width: "500px" }}
+          >
+            {inputFields.map((inputField, index) => (
+              <div key={inputField.id}>
+                <Card shadow="sm" withBorder>
+                  <Group>
+                    <h2>Medicine {index + 1}</h2>
+                    {index === 0 ? null : (
+                      <Button
+                        color="red"
+                        variant="outline"
+                        onClick={() => handleRemoveFields(inputField.id)}
+                      >
+                        Remove Medication
+                      </Button>
+                    )}
+                  </Group>
 
-                <TextInput
-                  placeholder="Frequency"
-                  label="Frequency"
-                  withAsterisk
-                  name="frequency"
-                  value={inputField.frequency}
-                  onChange={(event) => handleChangeInput(inputField.id, event)}
-                />
-                <div style={{ marginTop: "20px" }}>
-                  <Textarea
-                    placeholder="Additional Instructions"
-                    label="Additional Instructions"
-                    maxRows={7}
+                  <Group>
+                    <TextInput
+                      name="medicationName"
+                      placeholder="Medication Name"
+                      label="Medication Name"
+                      withAsterisk
+                      value={inputField.medicationName}
+                      onChange={(event) =>
+                        handleChangeInput(inputField.id, event)
+                      }
+                    />
+                    <TextInput
+                      name="RxNORM"
+                      placeholder="RXNormCode"
+                      label="RXNormCode"
+                      withAsterisk
+                      value={inputField.RxNORM}
+                      onChange={(event) =>
+                        handleChangeInput(inputField.id, event)
+                      }
+                    />
+                  </Group>
+                  <Group>
+                    <TextInput
+                      name="dosage"
+                      placeholder="Dosage"
+                      label="Dosage"
+                      withAsterisk
+                      value={inputField.dosage}
+                      onChange={(event) =>
+                        handleChangeInput(inputField.id, event)
+                      }
+                    />
+                    <TextInput
+                      placeholder="Route"
+                      label="Route"
+                      withAsterisk
+                      name="route"
+                      value={inputField.route}
+                      onChange={(event) =>
+                        handleChangeInput(inputField.id, event)
+                      }
+                    />
+                  </Group>
+
+                  <TextInput
+                    placeholder="Frequency"
+                    label="Frequency"
                     withAsterisk
-                    name="instructions"
-                    value={inputField.instructions}
+                    name="frequency"
+                    value={inputField.frequency}
                     onChange={(event) =>
                       handleChangeInput(inputField.id, event)
                     }
                   />
-                </div>
-              </Card>
-              <br />
-              <br />
-            </div>
-          ))}
+                  <div style={{ marginTop: "20px" }}>
+                    <Textarea
+                      placeholder="Additional Instructions"
+                      label="Additional Instructions"
+                      maxRows={7}
+                      withAsterisk
+                      name="instructions"
+                      value={inputField.instructions}
+                      onChange={(event) =>
+                        handleChangeInput(inputField.id, event)
+                      }
+                    />
+                  </div>
+                </Card>
+                <br />
+                <br />
+              </div>
+            ))}
           </div>
-          <br />
+        
           <Group>
             <Button color="green" variant="outline" onClick={handleAddFields}>
               Add Medication
             </Button>
-          </Group>
-          <br />
-          <Group>
-            <Button>Previous Medical History</Button>
             <Button
               color="blue"
               variant="outline"
@@ -213,66 +262,134 @@ const MedicationForm = () => {
             >
               Submit
             </Button>
+            
+          </Group>
+          <br />
+          <Group>
+            <Button>Previous Medical History</Button>
+            <Button color="blue" >
+              Use Snippets
+            </Button>
           </Group>
         </form>
         <br />
       </Card>
-      <div style={{ marginLeft: "100px" }}>
-        <Group>
-          <Button>Start Time</Button>
-          <Text size="xl">0:00</Text>
-        </Group>
+      <div style={{ marginLeft: "10px" }}>
 
-        <h2>Suggestions</h2>
-        <div style={{ overflowY: "scroll", height: "500px" }}>
-        <Card shadow="sm" withBorder>
-          <div>
-            <Group>
-              <TextInput
-                placeholder="Medication Name"
-                label="Medication Name"
-                value="Medication Name"
-              />
-              <TextInput
-                placeholder="RXNormCode"
-                label="RXNormCode"
-                value="IDB24H"
-              />
-            </Group>
-            <Group>
-              <TextInput placeholder="Dosage" label="Dosage" value="2 mg" />
-              <TextInput placeholder="Route" Value="Oral" label="Route" />
-            </Group>
-            <TextInput
-              placeholder="Frequency"
-              value="Twice a day"
-              label="Frequency"
-            />
-            <div style={{ marginTop: "20px" }}>
-              <Textarea
-                placeholder="Additional Instructions"
-                value="Additional Instructions"
-              />
+        <h3>Suggestions</h3>
+        <div
+          className="test"
+          style={{ overflowY: "scroll", height: "390px", width: "430px" }}
+        >
+          {suggestions.map((sus, index) => {
+            return (
+              <>
+                <Card shadow="sm" withBorder key={index}>
+                  <div>
+                    <Group>
+                      <TextInput
+                        placeholder="Medication Name"
+                        label="Medication Name"
+                        value={sus.medicationName}
+                      />
+                      <TextInput
+                        placeholder="RXNormCode"
+                        label="RXNormCode"
+                        value="IDB24H"
+                      />
+                    </Group>
+                    <Group>
+                      <TextInput
+                        placeholder="Dosage"
+                        label="Dosage"
+                        value={sus.dosage}
+                      />
+                      <TextInput
+                        placeholder="Route"
+                        Value="Oral"
+                        label={sus.route}
+                      />
+                    </Group>
+                    <Group>
+                    <TextInput
+                      placeholder="Frequency"
+                      value={sus.frequency}
+                      label="Frequency"
+                    />
+                    </Group>
+                    
+                    <div style={{ marginTop: "20px" }}>
+                   
+                    </div>
+                  </div>
+                  <div style={{ paddingTop: "7px" }}>
+                    {inputFields.length === 1 &&
+                    inputFields[0].medicationName === "" &&
+                    inputFields[0].RxNORM === "" &&
+                    inputFields[0].dosage === "" &&
+                    inputFields[0].frequency === "" &&
+                    inputFields[0].route === "" &&
+                    inputFields[0].instructions === "" ? (
+                      <Button
+                        variant="outline"
+                        onClick={() => firstForm(index)}
+                      >
+                        <IconArrowLeft />
+                      </Button>
+                    ) : inputFields.length === 1 &&
+                      inputFields[0].medicationName !== "" &&
+                      inputFields[0].RxNORM !== "" &&
+                      inputFields[0].dosage !== "" &&
+                      inputFields[0].route !== "" &&
+                      inputFields[0].frequency !== "" &&
+                      inputFields[0].instructions !== "" ? (
+                      <Button size="xs" onClick={() => pushData(index)}>
+                        <IconArrowLeft />
+                      </Button>
+                    ) : (
+                      <Button size="xs" onClick={() => pushData(index)}>
+                        <IconArrowLeft />
+                      </Button>
+                    )}
+                  </div>
+                </Card>
+                <br />
+              </>
+            );
+          })}
+        </div>
+        
+      </div>
+      <div style={{marginLeft: '10px', }}>
+        <Card>
+        
+        <div className="player">
+            <div className="header-player">
+              <div className="audio-record">
+                <input type="checkbox" id="audio_record-icon" />
+                <label
+                  for="audio_record-icon"
+                  className="player-icon audio_record-icon"
+                >
+                  <i className="myclass fa-solid fa-microphone"></i>
+                </label>
+              </div>
             </div>
           </div>
-          <div style={{ paddingTop: "7px" }}>
-            {
-              inputFields.length === 1 ? 
-                <Button size="xs" onClick={() => firstForm()}><IconArrowLeft /></Button> :
-                <Button size="xs" onClick={() => pushData({
-                                        medicationName: "FU", 
-                                        RxNORM: "FU", 
-                                        dosage: "FU", 
-                                        route: "FU", 
-                                        frequency: "FU", 
-                                        instructions: "FU"})}>
-                    <IconArrowLeft />
-                </Button>
-            }
+          <Card>
+
+          
+         <h3>Transcription Data</h3>
+          <div style={{width: '300px', border: '2px solid black'}}>
+                  test tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test test
           </div>
+          </Card>
         </Card>
+          
+
+ 
+          
         </div>
-      </div>
     </div>
   );
 };

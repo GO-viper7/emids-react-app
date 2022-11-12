@@ -3,26 +3,34 @@ import { Divider, Grid, Textarea, Group, Button  } from '@mantine/core';
 import { TextInput } from "@mantine/core";
 import MedicationForm from "../Components/MedicationForm";
 import { useLocation } from "react-router-dom";
-const PreviousOrders = () => {
-    const { state } = useLocation();
+import ProfileForm from "../Components/ProfileForm";
+import Snippet from "../Components/Snippet";
+
+
+const Profile = () => {
     return (
       <>
         <NavbarMinimal />
-        <div style={{width: "2000px" , height: '1000px'}}>
+        <div style={{width: "2000px" , height: '2000px'}}>
           <div style={{margin: '40px'}}>
             <h1 >
-              Prescription for {state.name}
+              Profile
             </h1>
             <Divider size="xs" /> 
             <Grid>
-             <Grid.Col>
+             <Grid.Col >
             <br />
-             
-            <form>
-              
-              <MedicationForm />
-              
-            </form>
+              <ProfileForm />
+            </Grid.Col>
+            </Grid>
+            <h1 >
+              Saved Snippets
+            </h1>
+            <Divider size="xs" /> 
+            <Grid>
+             <Grid.Col >
+            <br />
+              <Snippet />
             </Grid.Col>
             </Grid>
           </div>
@@ -31,4 +39,4 @@ const PreviousOrders = () => {
     )
 }
 
-export default PreviousOrders;
+export default Profile;
