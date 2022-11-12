@@ -19,6 +19,7 @@ import {
 } from "@tabler/icons";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
+import Typewriter from 'typewriter-effect'
 
 const MedicationForm = () => {
   const [suggestions, setSuggestions] = useState([
@@ -366,7 +367,7 @@ const MedicationForm = () => {
         <div className="player">
             <div className="header-player">
               <div className="audio-record">
-                <input type="checkbox" id="audio_record-icon" />
+                <input type="checkbox" id="audio_record-icon" checked="true" />
                 <label
                   for="audio_record-icon"
                   className="player-icon audio_record-icon"
@@ -378,11 +379,22 @@ const MedicationForm = () => {
           </div>
           <Card>
 
+          <div  style={{marginTop:'-20px'}}>
+          <h3>Transcription Data</h3>
+          <div style={{width: '300px',padding:'5px 5px 5px 5px ', border: '1px solid grey'}}>
           
-         <h3>Transcription Data</h3>
-          <div style={{width: '300px', border: '2px solid black'}}>
-                  test tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test testtest tes test test test
+          <Typewriter
+              onInit={(tp)=>{
+                tp.typeString("Hello, How are you. what are symptoms you are suffering from? I am suffering from Cold and fever. Oh, you are eating too much ice cream.. then?").start();
+              }}
+              />
           </div>
+          <h3>Summary of Transcript</h3>
+          <div style={{width: '300px',height:'30px',padding:'5px 5px 5px 5px ', border: '1px solid grey'}}>
+              {/* doctor recieving the patient nicely and asking the symptoms.patients answers back with symptoms like COLD AND FEVER. */}
+          </div>
+          </div>
+          
           </Card>
         </Card>
           
