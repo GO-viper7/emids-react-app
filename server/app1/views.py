@@ -13,11 +13,37 @@ def patient(request):
     
     
 @api_view(['POST'])
-def register(request):
+def doctorRegister(request):
     if request.method == 'POST' :
         serializer = DoctorSerializer(data=request.data)
         if serializer.is_valid() :
             serializer.save()
+            print(serializers)
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+@api_view(['POST'])
+def doctorLogin(request):
+    if request.method == 'POST' :
+        data = Doctor.objects.get(password=request.data['password'])
+        fake_data = Doctor.objects.get(email=request.data['email'])
+        if(data == fake_data) :
+            serializer = DoctorSerializer(data)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    
+@api_view(['POST', 'GET'])
+def snippet(request):
+    if request.method == 'POST' :
+        serializer = SnippetSerializer(data=request.data)
+        if serializer.is_valid() :
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    if request.method == 'GET' :
+        data = Snippet.objects.all()
+        serializer = SnippetSerializer(data, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     

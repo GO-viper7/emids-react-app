@@ -17,16 +17,12 @@ import {
   IconArrowAutofitLeft,
   IconArrowLeft,
 } from "@tabler/icons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { AuthContext } from "../Context/AuthContext";
 
 const ProfileForm = () => {
-  const name = localStorage.getItem('userName');
-  const specialization = localStorage.getItem('specialization');
-  const experience = localStorage.getItem('experience');
   return (
-    
-    
       <Card>
         <form>
          <div>
@@ -40,14 +36,14 @@ const ProfileForm = () => {
                     placeholder="Name"
                     label="Full Name"
                     withAsterisk
-                    value={name}
+                    value={localStorage.getItem("name")}
                   />
                   <TextInput
                     name="specialization"
                     placeholder="RXNormCode"
                     label="Specialization"
                     withAsterisk
-                    value={specialization}
+                    value={localStorage.getItem("specializations")}
         
                   />
              
@@ -56,7 +52,7 @@ const ProfileForm = () => {
                     placeholder="Dosage"
                     label="Experience"
                     withAsterisk
-                    value={experience}
+                    value={localStorage.getItem("experience")}
               
                   />
             

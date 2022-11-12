@@ -1,7 +1,7 @@
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Home from "./Pages/Home";
-import SignUp from "./Pages/SignUp";
+import SignUp from "./Pages/Register";
 import Login from "./Pages/Login";
 import { createContext } from "react";
 import { useState } from "react";

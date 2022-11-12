@@ -5,9 +5,13 @@ import MedicationForm from "../Components/MedicationForm";
 import { useLocation } from "react-router-dom";
 import ProfileForm from "../Components/ProfileForm";
 import Snippet from "../Components/Snippet";
+import {  useEffect } from "react";
 
 
 const Profile = () => {
+    useEffect(() => {
+        
+    }, []);
     return (
       <>
         <NavbarMinimal />

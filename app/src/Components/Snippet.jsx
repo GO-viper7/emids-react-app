@@ -17,11 +17,12 @@ import {
   IconArrowAutofitLeft,
   IconArrowLeft,
 } from "@tabler/icons";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-
+import { AuthContext } from "../Context/AuthContext";
 
 const Snippet = () => {
+  const {getSnips} = useContext(AuthContext);
   const snippets = 
     [
       {

@@ -20,8 +20,8 @@ import { showNotification } from "@mantine/notifications";
 import { AuthContext } from "../Context/AuthContext";
 
 const Register = () => {
-  const {login, user} = useContext(AuthContext);
- 
+  const {signup, user} = useContext(AuthContext);
+  console.log(user)
   const [loading, setLoading] = useState(false);
   
   const navigate = useNavigate();
@@ -30,34 +30,45 @@ const Register = () => {
   const form = useForm({
     validateInputOnChange: true,
     initialValues: {
+      fullname: "",
       email: "",
       password: "",
-      remember: false 
+      confirmPassword: "",
+      specializations: "",
+      experience: '',
+      toc: false,
     },
     validate: {
+      fullname: (value) => (value !== '' ? null : 'Full Name is required'),
       email: (value) => (validator.isEmail(value) ? null : "Invalid Email"),
       password: (value) =>
         value.length >= 8
           ? null
           : "Password must be at least 8 characters long",
+      confirmPassword: (value, { password }) =>
+        value === password ? null : "Passwords doesnt match",
+      toc: (value) =>
+        value ? null : "You must agree to our terms and conditions",
     },
   });
   const handleSubmit = async (values) => {
     setLoading(true);
     console.log(values);
-    const res = await login({
+    const res = await signup({
       email: values.email,
+      name: values.fullname,
       password: values.password,
-      remember: false
+      specializations: values.specializations,
+      experience: values.experience,
     });
     if (res) {
       showNotification({
         title: "Success",
-        message: "You have been logged successfully",
+        message: "You have been registered successfully",
         color: "teal",
         autoClose: 2000,
       });
-      navigate("/");
+      navigate("/login");
     } else {
       showNotification({
         title: "Error",
@@ -80,9 +91,34 @@ const Register = () => {
           <Grid.Col>
             <Box shadow="xl" withBorder>
               <Text size="xl" weight={700} align="center">
-                Login
+                Register
               </Text>
-             
+              <TextInput
+                placeholder="Full Name"
+                label="Full Name"
+                withAsterisk
+                required
+                {...form.getInputProps("fullname")}
+              />
+              <Group>
+
+              
+              <TextInput
+                placeholder="Specialization"
+                label="Specialization"  
+                withAsterisk
+                required
+                {...form.getInputProps("specializations")}
+              />
+
+              <NumberInput
+                placeholder="Experience"
+                label="Experience"
+                withAsterisk
+                required
+                {...form.getInputProps("experience")}
+              />
+              </Group>
               <TextInput
                 placeholder="Email"
                 label="Email"
@@ -100,12 +136,18 @@ const Register = () => {
                 required  
                 {...form.getInputProps("password")}
               />
-           
+              <PasswordInput
+                placeholder="Confirm Password"
+                label="Confirm Password"
+                withAsterisk
+                required
+                {...form.getInputProps("confirmPassword")}
+              />
              
               <br />
               <Checkbox
-                label="Keep me signed in"
-                {...form.getInputProps("remember", { type: "checkbox" })}
+                label="I agree to terms and conditions"
+                {...form.getInputProps("toc", { type: "checkbox" })}
               />
               <Button
                 type="submit"
@@ -114,12 +156,12 @@ const Register = () => {
                 color="blue"
                 loading={loading}
               >
-                Login
+                Register
               </Button>
               <Text align="center" size="sm">
-                Don't have an account?{" "}
-                <Link to="/register" style={{ color: "#3b82f6" }}>
-                  Sign-up
+                Already have an account?{" "}
+                <Link to="/login" style={{ color: "#3b82f6" }}>
+                  Login
                 </Link>
               </Text>
 
