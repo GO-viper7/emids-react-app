@@ -16,16 +16,16 @@ function App() {
   const toggleColorScheme = (value) =>
     setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
   return (
-      <div className="App">
+      <div className="App" >
         <FoodContext.Provider value={{ food, setFood }}>
           <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
           <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
               <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/profile" element={<Profile />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<SignUp/>} />
-                <Route path="/emids" element={<Emids/>} />
+                <Route path="/" element={localStorage.getItem('token')==='' ? <Login/> : <Home />} />
+                <Route path="/profile" element={localStorage.getItem('token')==='' ? <Login/> : < Profile />} />
+                <Route path="/login" element={localStorage.getItem('token')==='' ? <Login/> : < Login />} />
+                <Route path="/register" element={localStorage.getItem('token')==='' ? <Login/> : <SignUp />} />
+                <Route path="/emids" element={localStorage.getItem('token')==='' ? <Login/> : < Emids />} />
                 <Route path="*" element={<h1>404</h1>} />
               </Routes>
           </MantineProvider>

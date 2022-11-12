@@ -21,6 +21,9 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const ProfileForm = () => {
+  const name = localStorage.getItem('userName');
+  const specialization = localStorage.getItem('specialization');
+  const experience = localStorage.getItem('experience');
   return (
     
     
@@ -37,14 +40,14 @@ const ProfileForm = () => {
                     placeholder="Name"
                     label="Full Name"
                     withAsterisk
-                    value="Dr. Subbu"
+                    value={name}
                   />
                   <TextInput
                     name="specialization"
                     placeholder="RXNormCode"
                     label="Specialization"
                     withAsterisk
-                    value="Cardiologist"
+                    value={specialization}
         
                   />
              
@@ -53,7 +56,7 @@ const ProfileForm = () => {
                     placeholder="Dosage"
                     label="Experience"
                     withAsterisk
-                    value="24 years"
+                    value={experience}
               
                   />
             
