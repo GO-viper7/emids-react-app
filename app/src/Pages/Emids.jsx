@@ -5,13 +5,14 @@ import MedicationForm from "../Components/MedicationForm";
 import { useLocation } from "react-router-dom";
 const PreviousOrders = () => {
     const { state } = useLocation();
+    console.log(state);
     return (
       <>
         <NavbarMinimal />
         <div style={{width: "2000px" , height: '1000px'}}>
           <div style={{margin: '40px'}}>
             <h1 >
-              Prescription for {state.name}
+              {/* Prescription for {state.name} */}
             </h1>
             <Divider size="xs" /> 
             <Grid>

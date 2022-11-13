@@ -8,7 +8,7 @@ class PatientSerializer(serializers.ModelSerializer):
         fields = ['name', 'age', 'consultedOn', 'consultedWith']
         
 class DoctorSerializer(serializers.ModelSerializer):
-    patients = PatientSerializer(many=True, read_only=True)
+   
 
     class Meta:
         model = Doctor
@@ -16,7 +16,7 @@ class DoctorSerializer(serializers.ModelSerializer):
         
         
 class SnippetSerializer(serializers.ModelSerializer):
-    patients = PatientSerializer(many=True, read_only=True)
+   
 
     class Meta:
         model = Snippet

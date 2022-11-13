@@ -18,6 +18,8 @@ import React, { useState, useContext } from "react";
 import validator from "validator";
 import { showNotification } from "@mantine/notifications";
 import { AuthContext } from "../Context/AuthContext";
+import './register.css'
+import notlogo from "./signup.jpg"
 
 const Register = () => {
   const {signup, user} = useContext(AuthContext);
@@ -85,7 +87,11 @@ const Register = () => {
   }
 
   return (
-    <Container size="sm"> 
+    <div className="main">
+      <div className="left">
+        <img src={notlogo} />
+      </div>
+      <div className="right">
       <form onSubmit={form.onSubmit(handleSubmit)}>
         <Grid>
           <Grid.Col>
@@ -169,7 +175,8 @@ const Register = () => {
           </Grid.Col>
         </Grid>
       </form>
-    </Container>
+      </div>
+    </div>
 
   );
 };

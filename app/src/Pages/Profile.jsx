@@ -15,7 +15,7 @@ const Profile = () => {
     return (
       <>
         <NavbarMinimal />
-        <div style={{width: "2000px" , height: '2000px'}}>
+        <div style={{width: "2000px" , height: '3000px'}}>
           <div style={{margin: '40px'}}>
             <h1 >
               Profile

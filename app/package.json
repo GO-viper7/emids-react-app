@@ -5,6 +5,7 @@
   "dependencies": {
     "@apideck/node": "^2.4.0",
     "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
     "@mantine/carousel": "^5.7.1",
     "@mantine/core": "^5.7.1",
     "@mantine/dates": "^5.7.1",
@@ -16,6 +17,8 @@
     "@mantine/nprogress": "^5.7.1",
     "@mantine/prism": "^5.7.1",
     "@mantine/spotlight": "^5.7.1",
+    "@mui/material": "^5.10.13",
+    "@mui/styled-engine-sc": "^5.10.6",
     "@tabler/icons": "^1.110.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -27,6 +30,8 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "react-speech-recognition": "^3.10.0",
+    "styled-components": "^5.3.6",
     "validator": "^13.7.0",
     "web-vitals": "^2.1.4"
   },

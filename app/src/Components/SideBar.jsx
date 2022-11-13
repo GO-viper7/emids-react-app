@@ -11,7 +11,8 @@ import {
   IconSettings,
   IconLogout,
   IconProfile,
-  IconMoon
+  IconMoon,
+  IconBoxModelOff
 } from '@tabler/icons';
 import { Link, useLocation } from "react-router-dom";
 import { ActionIcon, useMantineColorScheme } from '@mantine/core';
@@ -66,6 +67,8 @@ export function NavbarMinimal() {
   const location = useLocation();
   const mockdata = [
     { icon: IconHome2, label: 'Home', to: '/' },
+    { icon: IconUser, label: 'Profile', to: '/profile' },
+    { icon: IconBoxModelOff, label: 'Logout', to: '/logout' },
     
   ];
   const [active, setActive] = useState(0);
@@ -87,12 +90,7 @@ export function NavbarMinimal() {
           {links}
         </Stack>
       </Navbar.Section>
-      <Navbar.Section>
-        <Stack justify="center" spacing={0}>
-          <Link to="/profile"><NavbarLink icon={IconUser} label="Profile" /></Link>
-          <NavbarLink icon={IconLogout} label="Logout" />
-        </Stack>
-      </Navbar.Section>
+  
     </Navbar>
   );
 }

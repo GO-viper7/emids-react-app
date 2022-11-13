@@ -8,6 +8,7 @@ import {
   Card,
   Text,
   MultiSelect,
+  Modal
 } from "@mantine/core";
 import { TextInput } from "@mantine/core";
 import {
@@ -20,8 +21,9 @@ import {
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Typewriter from 'typewriter-effect'
-
+import ComboBox from "./SearchEng";
 const MedicationForm = () => {
+  
   const [suggestions, setSuggestions] = useState([
     {
       medicationName: "Paracetamol",
@@ -84,7 +86,18 @@ const MedicationForm = () => {
 
   const handleChangeInput = (id, event) => {
     const newInputFields = inputFields.map((i) => {
+      const res = fetch(`https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=${i.medicationName}&maxEntries=10&option=1`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          },
+      })
+      .then((res) => res.json())
+      .then((data) => {
+         i["RxNORM"]=data["approximateGroup"]["candidate"][0]["rxaui"]
+      });
       if (id === i.id) {
+        
         i[event.target.name] = event.target.value;
       }
       return i;
@@ -132,6 +145,11 @@ const MedicationForm = () => {
     setInputFields(values);
   };
 
+  const handleClearFields = () => {
+    setInputFields([ { id: uuidv4(), medicationName: "", RxNORM: "", dosage: "", frequency: "", route: "", instructions: "", } ]);
+    setSuggestions(mainSuggestions);
+  };
+
   const pushData = (obj) => {
     console.log(obj);
     setInputFields([
@@ -152,7 +170,38 @@ const MedicationForm = () => {
   //    setSuggestions(mainSuggestions)
   // }, 1000);
   console.log(inputFields, suggestions);
+  const [opened, setOpened] = useState(false);
+  const snippets = 
+    [
+      {
+        Name: "Viral-Fever",
+        Medication: "Paracetamol",
+        Dosage: "500mg",
+        Frequency: "3 times a day",
+        Route: "Oral",
+        Instructions: "Take with food",
+      },
+      {
+        Name: "Cough",
+        Medication: "Ambroxol",
+        Dosage: "500mg",
+        Frequency: "3 times a day",
+        Route: "5 days",
+        Instructions: "Take with food",
+      },
+      {
+        Name: "Cold",
+        Medication: "Citrizine",
+        Dosage: "2mg",
+        Frequency: "1 times a day",
+        Route: "Oral",
+        Instructions: "Take with food",
+      }
+    ]
   return (
+    <>
+      
+    
     <div style={{ display: "flex" }}>
       <Card>
         <form onSubmit={handleSubmit}>
@@ -161,11 +210,48 @@ const MedicationForm = () => {
             style={{ overflowY: "scroll", height: "500px", width: "500px" }}
           >
             {inputFields.map((inputField, index) => (
+              
               <div key={inputField.id}>
+                <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Choose a Snippet to add to your prescription"
+      >
+        {<MultiSelect
+              data={['Viral Fever', 'Cough', 'Cold']}
+              label="Snippet"
+              placeholder="Pick the suitable snippet"
+              searchable
+              nothingFound="Nothing found"
+              onChange={() => {
+                {inputFields.length === 1 &&
+                  inputFields[0].medicationName === "" &&
+                  inputFields[0].RxNORM === "" &&
+                  inputFields[0].dosage === "" &&
+                  inputFields[0].frequency === "" &&
+                  inputFields[0].route === "" &&
+                  inputFields[0].instructions === "" ? firstForm(0) : inputFields.length === 1 &&
+                  inputFields[0].medicationName !== "" &&
+                  inputFields[0].RxNORM !== "" &&
+                  inputFields[0].dosage !== "" &&
+                  inputFields[0].route !== "" &&
+                  inputFields[0].frequency !== "" &&
+                  inputFields[0].instructions !== "" ? pushData(index) : pushData(index)}
+                  setOpened(false)
+              }}
+            />}
+      </Modal>
+
                 <Card shadow="sm" withBorder>
                   <Group>
                     <h2>Medicine {index + 1}</h2>
-                    {index === 0 ? null : (
+                    {index === 0 ? <Button
+                        color="red"
+                        variant="outline"
+                        onClick={() => handleClearFields(inputField.id)}
+                      >
+                        Clear Fields
+                      </Button> : (
                       <Button
                         color="red"
                         variant="outline"
@@ -177,6 +263,7 @@ const MedicationForm = () => {
                   </Group>
 
                   <Group>
+                    
                     <TextInput
                       name="medicationName"
                       placeholder="Medication Name"
@@ -268,8 +355,8 @@ const MedicationForm = () => {
           <br />
           <Group>
             <Button>Previous Medical History</Button>
-            <Button color="blue" >
-              Use Snippets
+            <Button onClick={() => {setOpened(true)}}>
+               Use Snippets
             </Button>
           </Group>
         </form>
@@ -358,6 +445,7 @@ const MedicationForm = () => {
               </>
             );
           })}
+
         </div>
         
       </div>
@@ -381,11 +469,11 @@ const MedicationForm = () => {
 
           <div  style={{marginTop:'-20px'}}>
           <h3>Transcription Data</h3>
-          <div style={{width: '300px',padding:'5px 5px 5px 5px ', border: '1px solid grey'}}>
+          <div style={{width: '350px',padding:'5px 5px 5px 5px ', border: '1px solid grey'}}>
           
           <Typewriter
               onInit={(tp)=>{
-                tp.typeString("Hello, How are you. what are symptoms you are suffering from? I am suffering from Cold and fever. Oh, you are eating too much ice cream.. then?").start();
+                tp.typeString("Hello, can you state symptoms you are suffering from ?<br /> I am suffering from body pains and fever. <br />Have you been eating any cold stuff for past few days? <br /> Yes <br />You should stop doing that and let me give you the prescription <br /> OK").start();
               }}
               />
           </div>
@@ -403,6 +491,7 @@ const MedicationForm = () => {
           
         </div>
     </div>
+    </>
   );
 };
 

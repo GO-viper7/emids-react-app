@@ -7,7 +7,7 @@ import {
   Input,
   Card,
   Text,
-  MultiSelect,
+  MultiSelect, Modal
 } from "@mantine/core";
 import { TextInput } from "@mantine/core";
 import {
@@ -17,14 +17,12 @@ import {
   IconArrowAutofitLeft,
   IconArrowLeft,
 } from "@tabler/icons";
-import { useState, useContext } from "react";
+import { useState, createContext } from "react";
 import { v4 as uuidv4 } from "uuid";
-import { AuthContext } from "../Context/AuthContext";
 
 const Snippet = () => {
-  const {getSnips} = useContext(AuthContext);
-  const snippets = 
-    [
+  const [ snippets, setSnippets ] = 
+    useState([
       {
         Name: "Viral-Fever",
         Medication: "Paracetamol",
@@ -42,16 +40,92 @@ const Snippet = () => {
         Instructions: "Take with food",
       },
       {
-        Name: "Motions",
-        Medication: "Loperamide",
+        Name: "Cold",
+        Medication: "Citrizine",
         Dosage: "2mg",
-        Frequency: "3 times a day",
+        Frequency: "1 times a day",
         Route: "Oral",
         Instructions: "Take with food",
       }
-    ]
+    ])
+    const [medication, setMedication] = useState("");
+    const [dosage, setDosage] = useState("");
+    const [frequency, setFrequency] = useState("");
+    const [route, setRoute] = useState("");
+    const [opened, setOpened] = useState(false);
+    const [instructions, setInstructions] = useState("");
+    const [name, setName] = useState("");
   return (
     <>
+    <Modal
+        opened={opened}
+        onClose={() => setOpened(false)}
+        title="Add Snippet"
+      >
+        <Group>
+                <TextInput
+                  placeholder="Name"
+                  label="Name"
+                  value={name}
+                  onChange={(e) => setName(e.currentTarget.value)}
+                />
+                <TextInput
+                  placeholder="Medication Name"
+                  label="Medication Name"
+                  value={medication}
+                  onChange={(e) => setMedication(e.currentTarget.value)}
+                />
+                <TextInput
+                  placeholder="RXNormCode"
+                  label="RXNormCode"
+                  value="IDB24H"
+                />
+              </Group>
+              <Group>
+                <TextInput 
+                placeholder="Dosage" 
+                label="Dosage" 
+                value={dosage}
+                onChange={(e) => setDosage(e.currentTarget.value)}
+                />
+                <TextInput 
+                placeholder="Route" 
+                Value={route} 
+                label="Route" 
+                onChange={(e) => setRoute(e.currentTarget.value)}
+                />
+              </Group>
+              <TextInput
+                placeholder="Frequency"
+                value={frequency}
+                label="Frequency"
+                onChange={(e) => setFrequency(e.currentTarget.value)}
+              />
+              <div style={{ marginTop: "20px" }}>
+                <Textarea
+                  placeholder="Additional Instructions"
+                  value={instructions}
+                  label="Additional Instructions"
+                  onChange={(e) => setInstructions(e.currentTarget.value)}
+                />
+              </div>
+              <br />
+              <Button onClick={() => {
+                 setOpened(false);
+                  setSnippets([...snippets, {
+                    Name: medication,
+                    Medication: medication,
+                    Dosage: dosage,
+                    Frequency: frequency,
+                    Route: route,
+                    Instructions: instructions,
+                  }])
+
+              }}>
+                Add
+              </Button>
+      </Modal>
+
       {snippets.map((sus, index) => (
         
         <>
@@ -94,7 +168,7 @@ const Snippet = () => {
           <br />
           </>
       ))}
-      <Button>
+      <Button onClick={() => setOpened(true)}>
         <IconPlus /> Add New Snippet
       </Button>
     </>

@@ -55,7 +55,7 @@ const AuthContextProvider = ({ children }) => {
   };
 
   const getSnips = async () => {
-    const res = await api.get(
+    const res = await api.post(
       `http://localhost:8000/doctor/snippets`,
       JSON.stringify(localStorage.getItem("email")),
       { 
@@ -106,8 +106,25 @@ const AuthContextProvider = ({ children }) => {
     return () => clearTimeout(id);
   }, [token]);
 
+
+  const speech = async () => {
+    const res = await api.get(
+      `http://localhost:8000/speech`,
+       { 
+        headers: {
+          'Content-Type': 'application/json',
+        }
+      } 
+    );
+    console.log(res);
+    return res.data
+  }
+
+
+
+
   return (
-    <AuthContext.Provider value={{ user, loading, signup, login, logout, saveJobs, updateUser, getSnips }}>
+    <AuthContext.Provider value={{ user, loading, signup, login, logout, saveJobs, updateUser, getSnips, speech }}>
       {children}
     </AuthContext.Provider>
   );

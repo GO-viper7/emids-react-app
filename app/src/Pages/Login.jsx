@@ -18,7 +18,8 @@ import React, { useState, useContext } from "react";
 import validator from "validator";
 import { showNotification } from "@mantine/notifications";
 import { AuthContext } from "../Context/AuthContext";
-
+import "./login.css"
+import notlogo from './hospital-login.svg'
 const Register = () => {
   const {login, user} = useContext(AuthContext);
  
@@ -74,60 +75,64 @@ const Register = () => {
   }
 
   return (
-    <Container size="sm"> 
-      <form onSubmit={form.onSubmit(handleSubmit)}>
-        <Grid>
-          <Grid.Col>
-            <Box shadow="xl" withBorder>
-              <Text size="xl" weight={700} align="center">
-                Login
-              </Text>
-             
-              <TextInput
-                placeholder="Email"
-                label="Email"
-                withAsterisk  
-                required
-                {...form.getInputProps("email")}
-              />
-             
+    <>
+    <div className="main">
+    <div className="left-div">
+      <img src={notlogo} style={{paddingTop:'16%'}} />
+    </div>
+    <div className="right-div">
+        <form onSubmit={form.onSubmit(handleSubmit)}>
+          <Grid>
+            <Grid.Col>
+              <Box shadow="xl" withBorder>
+                <Text size="xl" weight={700} align="center">
+                  Login
+                </Text>
 
-              
-              <PasswordInput
-                placeholder="Password"
-                label="Password"  
-                withAsterisk  
-                required  
-                {...form.getInputProps("password")}
-              />
-           
-             
-              <br />
-              <Checkbox
-                label="Keep me signed in"
-                {...form.getInputProps("remember", { type: "checkbox" })}
-              />
-              <Button
-                type="submit"
-                fullWidth   
-                variant="light"
-                color="blue"
-                loading={loading}
-              >
-                Login
-              </Button>
-              <Text align="center" size="sm">
-                Don't have an account?{" "}
-                <Link to="/register" style={{ color: "#3b82f6" }}>
-                  Sign-up
-                </Link>
-              </Text>
+                <TextInput
+                  placeholder="Email"
+                  label="Email"
+                  withAsterisk
+                  required
+                  {...form.getInputProps("email")} />
 
-            </Box>
-          </Grid.Col>
-        </Grid>
-      </form>
-    </Container>
+
+
+                <PasswordInput
+                  placeholder="Password"
+                  label="Password"
+                  withAsterisk
+                  required
+                  {...form.getInputProps("password")} />
+
+
+                <br />
+                <Checkbox
+                  label="Keep me signed in"
+                  {...form.getInputProps("remember", { type: "checkbox" })} />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="light"
+                  color="blue"
+                  loading={loading}
+                >
+                  Login
+                </Button>
+                <Text align="center" size="sm">
+                  Don't have an account?{" "}
+                  <Link to="/register" style={{ color: "#3b82f6" }}>
+                    Sign-up
+                  </Link>
+                </Text>
+
+              </Box>
+            </Grid.Col>
+          </Grid>
+        </form>
+      </div>
+      </div>
+      </>
 
   );
 };
